@@ -2,156 +2,163 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>R-REBORN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-Chronicle: Time Paradox</title>
     <style>
-        :root { --reborn: #00f3ff; --bg: #050508; }
-        body { margin: 0; overflow: hidden; background: var(--bg); color: white; font-family: 'Orbitron', sans-serif; touch-action: none; }
-        
-        #hud { position: fixed; top: 20px; width: 100%; display: flex; justify-content: space-around; z-index: 100; pointer-events: none; }
-        .stat { background: rgba(0,0,0,0.8); padding: 10px 20px; border: 1px solid var(--reborn); border-radius: 5px; box-shadow: 0 0 15px var(--reborn); }
-
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; text-align: center; }
-        button { padding: 15px 50px; font-size: 22px; background: var(--reborn); border: none; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 30px; box-shadow: 0 0 30px var(--reborn); }
-        
-        #flash { position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; transition: opacity 0.5s; z-index: 999; }
+        :root { --main: #7000ff; --accent: #00ffaa; --bg: #050505; }
+        body { 
+            margin: 0; background: var(--bg); color: #fff; 
+            font-family: 'Courier New', Courier, monospace;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
+            overflow: hidden;
+        }
+        #game-box { 
+            width: 90%; max-width: 500px; padding: 30px; border: 1px solid var(--main);
+            border-radius: 20px; text-align: center; background: rgba(112, 0, 255, 0.05);
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
+        }
+        .data-text { font-size: 28px; font-weight: bold; color: var(--accent); margin: 20px 0; min-height: 40px; }
+        .instruction { font-size: 16px; opacity: 0.7; margin-bottom: 10px; }
+        input { 
+            width: 80%; padding: 10px; background: transparent; border: none; 
+            border-bottom: 2px solid var(--main); color: #fff; font-size: 20px; 
+            text-align: center; outline: none; display: none; margin: 20px auto;
+        }
+        button { 
+            padding: 12px 25px; background: var(--main); color: #fff; border: none; 
+            cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s;
+        }
+        button:hover { background: var(--accent); color: #000; }
+        #timer { width: 100%; height: 4px; background: #222; margin-top: 10px; }
+        #timer-progress { width: 100%; height: 100%; background: var(--main); }
     </style>
 </head>
 <body>
 
-<div id="flash"></div>
-
-<div id="hud">
-    <div class="stat">FORM: <span id="form-name">Cell</span></div>
-    <div class="stat">DNA: <span id="dna">0</span> / 10</div>
+<div id="game-box">
+    <h2 style="color: var(--main);">R-CHRONICLE</h2>
+    <div id="instruction" class="instruction">Memorize the data carefully...</div>
+    <div id="display" class="data-text">READY?</div>
+    <div id="timer"><div id="timer-progress"></div></div>
+    
+    <input type="text" id="answer-input" placeholder="Type answer here...">
+    <br>
+    <button id="action-btn" onclick="nextStep()">START MISSION</button>
 </div>
-
-<div id="start-screen" class="overlay">
-    <h1 style="color: var(--reborn); font-size: 50px; margin:0;">R-REBORN</h1>
-    <p>COLLECT ENERGY TO EVOLVE</p>
-    <p>Move your finger to guide the soul.</p>
-    <button onclick="startGame()">EVOLVE</button>
-</div>
-
-<canvas id="gameCanvas"></canvas>
 
 <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    let gameActive = false, dna = 0, stage = 1;
-    let particles = [], energy = [];
-    const player = { x: 0, y: 0, size: 20 };
+    let history = [];
+    let currentLevel = 0;
+    let gameState = "START"; // START, MEMORIZE, DISTRACT, QUESTION
+    let currentDistraction = null;
 
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const dataPool = [
+        {type: "Color", items: ["RED", "BLUE", "CYAN", "GOLD", "NEON", "PURPLE"]},
+        {type: "Name", items: ["ALEX", "ZARA", "MAX", "LUNA", "REX", "YUMI"]},
+        {type: "Object", items: ["KEY", "BOX", "SWORD", "RING", "MAP", "COIN"]},
+        {type: "City", items: ["TOKYO", "BERLIN", "SEOUL", "PARIS", "DUBAI"]}
+    ];
 
-    // --- INFINITE EVOLVING MUSIC ---
-    function playInfiniteMusic() {
-        if (!gameActive) return;
-        const now = audioCtx.currentTime;
+    function nextStep() {
+        const display = document.getElementById('display');
+        const input = document.getElementById('answer-input');
+        const btn = document.getElementById('action-btn');
+        const instr = document.getElementById('instruction');
 
-        // Bass Pulse (Grows with Stage)
-        const bass = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        bass.type = (stage === 1) ? 'sine' : 'sawtooth';
-        bass.frequency.setValueAtTime(50 + (stage * 10), now);
-        g.gain.setValueAtTime(0.05 * stage, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-        bass.connect(g); g.connect(audioCtx.destination);
-        bass.start(); bass.stop(now + 0.5);
-
-        // Synth Melody
-        if (stage >= 2) {
-            const synth = audioCtx.createOscillator();
-            const sg = audioCtx.createGain();
-            synth.frequency.setValueAtTime(220 * stage, now);
-            sg.gain.setValueAtTime(0.02, now);
-            sg.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-            synth.connect(sg); sg.connect(audioCtx.destination);
-            synth.start(); synth.stop(now + 0.2);
+        if (gameState === "START") {
+            startLevel();
+        } else if (gameState === "DISTRACT") {
+            checkDistraction();
+        } else if (gameState === "QUESTION") {
+            checkFinalAnswer();
         }
-
-        setTimeout(playInfiniteMusic, 500);
     }
 
-    function startGame() {
-        document.getElementById('start-screen').style.display = 'none';
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        player.x = canvas.width / 2;
-        player.y = canvas.height / 2;
-        gameActive = true;
-        if(audioCtx.state === 'suspended') audioCtx.resume();
-        playInfiniteMusic();
-        spawnEnergy();
-        update();
-    }
-
-    function spawnEnergy() {
-        if(!gameActive) return;
-        energy.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: 5
-        });
-        setTimeout(spawnEnergy, 1000 / stage);
-    }
-
-    window.onpointermove = (e) => {
-        player.x = e.clientX;
-        player.y = e.clientY;
-    };
-
-    function reborn() {
-        stage++;
-        dna = 0;
-        document.getElementById('flash').style.opacity = 1;
-        setTimeout(() => document.getElementById('flash').style.opacity = 0, 500);
+    function startLevel() {
+        currentLevel++;
+        gameState = "MEMORIZE";
+        const input = document.getElementById('answer-input');
+        const btn = document.getElementById('action-btn');
+        const instr = document.getElementById('instruction');
         
-        const names = ["Cell", "Core", "Virus", "Master", "God"];
-        document.getElementById('form-name').innerText = names[stage-1] || "Eternal";
-        document.getElementById('dna').innerText = "0";
+        // Yangi ma'lumot tanlash
+        let category = dataPool[Math.floor(Math.random() * dataPool.length)];
+        let item = category.items[Math.floor(Math.random() * category.items.length)];
+        history.push({level: currentLevel, type: category.type, val: item});
+
+        instr.innerText = `LEVEL ${currentLevel}: MEMORIZE THIS`;
+        display.innerText = item;
+        btn.style.display = "none";
+
+        // 2 sekunddan keyin chalg'itish bosqichiga o'tadi
+        setTimeout(() => {
+            showDistraction();
+        }, 2000);
     }
 
-    function update() {
-        if(!gameActive) return;
-        ctx.fillStyle = 'rgba(5, 5, 8, 0.2)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function showDistraction() {
+        gameState = "DISTRACT";
+        const instr = document.getElementById('instruction');
+        const input = document.getElementById('answer-input');
+        const btn = document.getElementById('action-btn');
 
-        // Draw Player based on Stage (REBORN EFFECT)
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = varColor();
-        ctx.fillStyle = varColor();
-        
-        ctx.beginPath();
-        if (stage === 1) ctx.arc(player.x, player.y, 15, 0, Math.PI*2);
-        else if (stage === 2) ctx.rect(player.x-15, player.y-15, 30, 30);
-        else {
-            ctx.moveTo(player.x, player.y - 20);
-            ctx.lineTo(player.x - 20, player.y + 20);
-            ctx.lineTo(player.x + 20, player.y + 20);
-        }
-        ctx.fill();
+        let n1 = Math.floor(Math.random() * 20);
+        let n2 = Math.floor(Math.random() * 20);
+        currentDistraction = n1 + n2;
 
-        // Energy Collection
-        energy.forEach((e, i) => {
-            ctx.fillStyle = "white";
-            ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.fill();
+        instr.innerText = "QUICK MATH! (To clear short-term memory)";
+        display.innerText = `${n1} + ${n2} = ?`;
+        input.style.display = "block";
+        input.value = "";
+        btn.style.display = "inline-block";
+        btn.innerText = "SUBMIT";
+    }
 
-            if(Math.hypot(player.x - e.x, player.y - e.y) < 30) {
-                energy.splice(i, 1);
-                dna++;
-                document.getElementById('dna').innerText = dna;
-                if(dna >= 10) reborn();
+    function checkDistraction() {
+        const input = document.getElementById('answer-input');
+        if (parseInt(input.value) === currentDistraction) {
+            if (currentLevel >= 3 && Math.random() > 0.5) {
+                askParadox();
+            } else {
+                startLevel();
             }
-        });
-
-        requestAnimationFrame(update);
+        } else {
+            gameOver("Math error! Concentration lost.");
+        }
     }
 
-    function varColor() {
-        const colors = ["#00f3ff", "#ff00ff", "#ffff00", "#00ff00", "#ff0000"];
-        return colors[(stage-1) % 5];
+    function askParadox() {
+        gameState = "QUESTION";
+        const instr = document.getElementById('instruction');
+        const input = document.getElementById('answer-input');
+        
+        // O'tmishdagi tasodifiy darajani so'rash
+        let targetIdx = Math.floor(Math.random() * (history.length - 1));
+        let target = history[targetIdx];
+        
+        instr.innerText = "TIME PARADOX!";
+        display.innerText = `What was the ${target.type} at Level ${target.level}?`;
+        input.value = "";
+        input.style.display = "block";
+        
+        currentDistraction = target.val; // To'g'ri javobni saqlaymiz
+    }
+
+    function checkFinalAnswer() {
+        const input = document.getElementById('answer-input');
+        if (input.value.toUpperCase() === currentDistraction) {
+            alert("Incredible! Your long-term memory is sharp.");
+            startLevel();
+        } else {
+            gameOver(`Paradox! The answer was ${currentDistraction}`);
+        }
+    }
+
+    function gameOver(msg) {
+        alert(msg);
+        location.reload();
     }
 </script>
+
 </body>
 </html>
