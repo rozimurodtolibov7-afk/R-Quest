@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📝 So'z Xotirasi O'yini</title>
+    <title>🎴 Xotira O'yini</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -32,7 +32,7 @@
 
         h1 {
             text-align: center;
-            color: #667eea;
+            color: #f5576c;
             margin-bottom: 10px;
             font-size: 2.5em;
         }
@@ -49,7 +49,7 @@
             justify-content: space-around;
             margin-bottom: 30px;
             padding: 20px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             border-radius: 15px;
         }
 
@@ -58,135 +58,24 @@
         }
 
         .stat-value {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
-            color: white;
+            color: #f5576c;
         }
 
         .stat-label {
-            color: white;
+            color: #666;
             font-size: 0.9em;
             margin-top: 5px;
-            opacity: 0.9;
         }
 
-        .game-mode {
+        .controls {
             text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .mode-btn {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .mode-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-        }
-
-        .game-instructions {
-            text-align: center;
-            font-size: 1.3em;
-            color: #666;
-            margin: 25px 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 15px;
-            font-weight: bold;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .words-display {
-            text-align: center;
-            min-height: 200px;
-            margin: 30px 0;
-            padding: 30px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .word-item {
-            font-size: 2.5em;
-            color: #667eea;
-            font-weight: bold;
-            margin: 10px 0;
-            opacity: 0;
-            animation: fadeInOut 2s ease-in-out;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: scale(0.8); }
-            20% { opacity: 1; transform: scale(1.1); }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.8); }
-        }
-
-        .input-area {
-            display: none;
-            margin: 30px 0;
-        }
-
-        .input-area.show {
-            display: block;
-        }
-
-        .word-input {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.3em;
-            border: 3px solid #667eea;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .word-input:focus {
-            border-color: #764ba2;
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .word-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-            justify-content: center;
-        }
-
-        .word-chip {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #333;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            animation: popIn 0.3s ease;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            margin-bottom: 30px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -194,7 +83,7 @@
             font-size: 1.1em;
             cursor: pointer;
             transition: transform 0.2s;
-            margin: 10px 5px;
+            margin: 5px;
             font-weight: bold;
         }
 
@@ -206,78 +95,103 @@
             transform: scale(0.95);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-        }
-
-        .controls {
+        .difficulty-selector {
+            margin-bottom: 20px;
             text-align: center;
-            margin: 20px 0;
         }
 
-        .feedback {
-            text-align: center;
-            font-size: 1.4em;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+        .difficulty-btn {
+            background: white;
+            color: #f5576c;
+            border: 2px solid #f5576c;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: #f5576c;
+        }
+
+        .memory-grid {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+
+        .grid-easy {
+            grid-template-columns: repeat(4, 100px);
+        }
+
+        .grid-medium {
+            grid-template-columns: repeat(4, 90px);
+        }
+
+        .grid-hard {
+            grid-template-columns: repeat(6, 80px);
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5em;
+            transition: transform 0.3s;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card::before {
+            content: '?';
+            position: absolute;
+            color: white;
+            font-size: 2em;
             font-weight: bold;
+        }
+
+        .memory-card:hover:not(.flipped):not(.matched) {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: white;
+            border: 3px solid #f5576c;
+        }
+
+        .memory-card.flipped::before {
             display: none;
         }
 
-        .feedback.show {
-            display: block;
-            animation: slideIn 0.3s ease;
+        .memory-card.matched {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            cursor: default;
+            animation: matchPulse 0.5s ease-in-out;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .memory-card.matched::before {
+            display: none;
         }
 
-        .feedback.success {
-            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
-            color: #22543d;
-        }
-
-        .feedback.error {
-            background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);
-            color: #742a2a;
-        }
-
-        .feedback.info {
-            background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
-            color: #2c5282;
-        }
-
-        .countdown {
-            font-size: 5em;
-            color: #667eea;
-            font-weight: bold;
-            animation: countPulse 1s ease-in-out;
-        }
-
-        @keyframes countPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
+        @keyframes matchPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .game-over {
             text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            border-radius: 20px;
+            padding: 30px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
             margin-top: 20px;
             display: none;
         }
@@ -290,7 +204,7 @@
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -299,100 +213,95 @@
         }
 
         .game-over h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 2.5em;
+            color: #f5576c;
+            margin-bottom: 15px;
+            font-size: 2em;
         }
 
-        .progress-info {
+        .game-over p {
+            font-size: 1.2em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .timer {
             text-align: center;
+            font-size: 1.5em;
+            color: #f5576c;
+            font-weight: bold;
             margin: 15px 0;
-            font-size: 1.1em;
+        }
+
+        .moves-counter {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .instructions {
+            text-align: center;
+            background: #fff3f3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             color: #666;
         }
 
-        .category-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 1em;
-            font-weight: bold;
-            margin: 10px 0;
+        .star-rating {
+            text-align: center;
+            font-size: 2em;
+            margin: 15px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📝 So'z Xotirasi</h1>
-        <p class="subtitle">So'zlarni eslab qoling va takrorlang!</p>
+        <h1>🎴 Xotira O'yini</h1>
+        <p class="subtitle">Juftlarni toping va xotirangizni kuchaytiring!</p>
 
-        <div class="game-mode">
-            <button class="mode-btn active" onclick="setGameMode('easy')">Oson (3-4 so'z)</button>
-            <button class="mode-btn" onclick="setGameMode('medium')">O'rta (5-6 so'z)</button>
-            <button class="mode-btn" onclick="setGameMode('hard')">Qiyin (7-10 so'z)</button>
+        <div class="instructions">
+            💡 Kartochkalarni bosing va bir xil rasmlarni toping. Kamroq harakatda tugatsangiz, ko'proq ball olasiz!
+        </div>
+
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" onclick="setDifficulty('easy')">Oson (4x4)</button>
+            <button class="difficulty-btn" onclick="setDifficulty('medium')">O'rta (4x4)</button>
+            <button class="difficulty-btn" onclick="setDifficulty('hard')">Qiyin (6x6)</button>
         </div>
 
         <div class="stats">
-            <div class="stat">
-                <div class="stat-value" id="level">1</div>
-                <div class="stat-label">Daraja</div>
-            </div>
             <div class="stat">
                 <div class="stat-value" id="score">0</div>
                 <div class="stat-label">Ball</div>
             </div>
             <div class="stat">
-                <div class="stat-value" id="streak">0</div>
-                <div class="stat-label">Ketma-ketlik</div>
+                <div class="stat-value" id="matches">0</div>
+                <div class="stat-label">Juftlar</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="bestTime">--</div>
+                <div class="stat-label">Eng Yaxshi Vaqt</div>
             </div>
         </div>
 
-        <div id="gameArea">
-            <div class="game-instructions" id="instructions">
-                Boshlash uchun tugmani bosing
-            </div>
-
-            <div class="category-badge" id="category" style="display: none;"></div>
-
-            <div class="progress-info" id="progressInfo"></div>
-
-            <div class="words-display" id="wordsDisplay"></div>
-
-            <div class="input-area" id="inputArea">
-                <input type="text" 
-                       class="word-input" 
-                       id="wordInput" 
-                       placeholder="So'zni kiriting..."
-                       autocomplete="off">
-                <div class="word-list" id="wordList"></div>
-                <div class="controls">
-                    <button class="btn" onclick="submitWord()">Yuborish</button>
-                    <button class="btn btn-secondary" onclick="skipWord()">O'tkazib yuborish</button>
-                    <button class="btn btn-secondary" onclick="finishRecall()">Tugatish</button>
-                </div>
-            </div>
-
-            <div class="feedback" id="feedback"></div>
-
-            <div class="controls" id="startControls">
-                <button class="btn" onclick="startGame()">🎮 Boshlash</button>
-            </div>
+        <div class="controls">
+            <button class="btn" onclick="initGame()">🔄 Yangi O'yin</button>
+            <button class="btn" onclick="toggleMusic()" id="musicBtn">🔊 Musiqa</button>
         </div>
+
+        <div class="timer">⏱ Vaqt: <span id="timer">0</span>s</div>
+        <div class="moves-counter">🎯 Harakatlar: <span id="moves">0</span></div>
+
+        <div class="memory-grid grid-easy" id="memoryGrid"></div>
 
         <div class="game-over" id="gameOver">
-            <h2>🎯 Natijalar</h2>
-            <p style="font-size: 1.5em; margin: 20px 0; color: #666;">
-                Daraja: <strong id="finalLevel" style="color: #667eea;">1</strong>
-            </p>
-            <p style="font-size: 1.5em; margin: 20px 0; color: #666;">
-                Ball: <strong id="finalScore" style="color: #667eea;">0</strong>
-            </p>
-            <p style="font-size: 1.3em; margin: 20px 0; color: #666;">
-                Eng uzun ketma-ketlik: <strong id="maxStreak" style="color: #f5576c;">0</strong>
-            </p>
-            <button class="btn" onclick="resetGame()">Qayta O'ynash</button>
+            <h2>🎉 Tabriklaymiz!</h2>
+            <div class="star-rating" id="stars"></div>
+            <p>Vaqt: <span id="finalTime"></span> soniya</p>
+            <p>Harakatlar: <span id="finalMoves"></span></p>
+            <p>Ball: <span id="finalScore"></span></p>
+            <button class="btn" onclick="initGame()">Yana O'ynash</button>
         </div>
     </div>
 
@@ -401,43 +310,42 @@
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let isMusicPlaying = false;
 
-        // Sound effects
-        function playWordSound() {
+        // Sound effects functions
+        function playFlipSound() {
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
             
+            oscillator.frequency.value = 800;
             oscillator.type = 'sine';
-            oscillator.frequency.value = 600;
             
-            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
             
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
+            oscillator.stop(audioContext.currentTime + 0.1);
         }
 
-        function playCorrectSound() {
-            const notes = [523, 659, 784];
-            notes.forEach((freq, index) => {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.type = 'triangle';
-                oscillator.frequency.value = freq;
-                
-                const startTime = audioContext.currentTime + (index * 0.08);
-                gainNode.gain.setValueAtTime(0.2, startTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
-                
-                oscillator.start(startTime);
-                oscillator.stop(startTime + 0.2);
-            });
+        function playMatchSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'triangle';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            
+            oscillator.frequency.setValueAtTime(523, audioContext.currentTime);
+            oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1);
+            oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.2);
+            
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
         }
 
         function playWrongSound() {
@@ -450,16 +358,16 @@
             oscillator.type = 'sawtooth';
             oscillator.frequency.value = 200;
             
-            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
             
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
+            oscillator.stop(audioContext.currentTime + 0.2);
         }
 
-        function playLevelUpSound() {
-            const melody = [392, 494, 587, 698, 784];
-            melody.forEach((freq, index) => {
+        function playWinSound() {
+            const notes = [523, 659, 784, 1047];
+            notes.forEach((freq, index) => {
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
                 
@@ -469,279 +377,236 @@
                 oscillator.type = 'sine';
                 oscillator.frequency.value = freq;
                 
-                const startTime = audioContext.currentTime + (index * 0.1);
-                gainNode.gain.setValueAtTime(0.2, startTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.25);
+                const startTime = audioContext.currentTime + (index * 0.15);
+                gainNode.gain.setValueAtTime(0.3, startTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
                 
                 oscillator.start(startTime);
-                oscillator.stop(startTime + 0.25);
+                oscillator.stop(startTime + 0.3);
             });
         }
 
-        let gameMode = 'easy';
-        let level = 1;
-        let score = 0;
-        let streak = 0;
-        let maxStreak = 0;
-        let currentWords = [];
-        let rememberedWords = [];
-        let currentCategory = '';
-
-        const wordCategories = {
-            easy: {
-                'Mevalar': ['olma', 'anor', 'uzum', 'behi'],
-                'Hayvonlar': ['mushuk', 'it', 'qush', 'baliq'],
-                'Ranglar': ['qizil', 'ko\'k', 'yashil', 'sariq'],
-                'Buyumlar': ['kitob', 'qalam', 'stol', 'stul']
-            },
-            medium: {
-                'Transport': ['mashina', 'velosiped', 'samolyot', 'poyezd', 'kema'],
-                'Kasb': ['o\'qituvchi', 'shifokor', 'muhandis', 'artist', 'oshpaz'],
-                'Sport': ['futbol', 'basketbol', 'suzish', 'yugurish', 'tennis', 'shaxmat'],
-                'Tabiat': ['daryo', 'tog\'', 'dengiz', 'quyosh', 'oy', 'yulduz']
-            },
-            hard: {
-                'Mamlakatlar': ['o\'zbekiston', 'qozog\'iston', 'turkiya', 'rossiya', 'italiya', 'yaponiya', 'germaniya', 'fransiya'],
-                'Shaharlar': ['toshkent', 'samarqand', 'buxoro', 'xiva', 'andijon', 'farg\'ona', 'namangan', 'qo\'qon'],
-                'Fan': ['matematika', 'fizika', 'kimyo', 'biologiya', 'astronomiya', 'geologiya', 'geografiya'],
-                'Kasblar': ['dasturchi', 'arxitektor', 'jurnalist', 'tadbirkor', 'direktor', 'menejer', 'loyihachi', 'tadqiqotchi']
+        function playBackgroundMusic() {
+            if (isMusicPlaying) return;
+            isMusicPlaying = true;
+            
+            const melody = [523, 587, 659, 784, 659, 587, 523, 0];
+            let noteIndex = 0;
+            
+            function playNote() {
+                if (!isMusicPlaying) return;
+                
+                const freq = melody[noteIndex];
+                if (freq > 0) {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.type = 'sine';
+                    oscillator.frequency.value = freq;
+                    
+                    gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.4);
+                }
+                
+                noteIndex = (noteIndex + 1) % melody.length;
+                setTimeout(playNote, 500);
             }
+            
+            playNote();
+        }
+
+        function stopBackgroundMusic() {
+            isMusicPlaying = false;
+        }
+
+        let difficulty = 'easy';
+        let symbols = {
+            easy: ['🍎', '🍌', '🍇', '🍊', '🍓', '🍒', '🍑', '🥝'],
+            medium: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'],
+            hard: ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🥊', '🥋', '🎯', '⛳', '🏹', '🎣']
         };
 
-        function setGameMode(mode) {
-            gameMode = mode;
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let score = 0;
+        let startTime;
+        let timerInterval;
+        let bestTime = localStorage.getItem('memoryBestTime') || null;
+        let selectedSymbols = [];
+
+        if (bestTime) {
+            document.getElementById('bestTime').textContent = bestTime + 's';
+        }
+
+        function setDifficulty(level) {
+            difficulty = level;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            
+            const grid = document.getElementById('memoryGrid');
+            grid.className = 'memory-grid grid-' + level;
+            
+            initGame();
         }
 
-        function startGame() {
-            level = 1;
+        function initGame() {
+            // Reset game state
+            flippedCards = [];
+            matchedPairs = 0;
+            moves = 0;
             score = 0;
-            streak = 0;
-            maxStreak = 0;
             
-            updateStats();
-            
+            document.getElementById('score').textContent = score;
+            document.getElementById('matches').textContent = matchedPairs;
+            document.getElementById('moves').textContent = moves;
+            document.getElementById('timer').textContent = '0';
             document.getElementById('gameOver').classList.remove('show');
-            document.getElementById('startControls').style.display = 'none';
-            document.getElementById('feedback').classList.remove('show');
-            
-            nextLevel();
-        }
 
-        function nextLevel() {
-            // Select random category
-            const categories = wordCategories[gameMode];
-            const categoryNames = Object.keys(categories);
-            currentCategory = categoryNames[Math.floor(Math.random() * categoryNames.length)];
-            
-            // Get words and shuffle
-            let words = [...categories[currentCategory]];
-            words = words.sort(() => Math.random() - 0.5);
-            
-            // Determine number of words based on mode and level
-            let wordCount;
-            switch(gameMode) {
+            // Clear timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            // Setup cards based on difficulty
+            switch(difficulty) {
                 case 'easy':
-                    wordCount = Math.min(3 + Math.floor(level / 2), 5);
+                    selectedSymbols = symbols.easy;
                     break;
                 case 'medium':
-                    wordCount = Math.min(4 + Math.floor(level / 2), 7);
+                    selectedSymbols = symbols.medium;
                     break;
                 case 'hard':
-                    wordCount = Math.min(5 + level, 10);
+                    selectedSymbols = symbols.hard;
                     break;
             }
+
+            cards = [...selectedSymbols, ...selectedSymbols].sort(() => Math.random() - 0.5);
             
-            currentWords = words.slice(0, wordCount);
-            rememberedWords = [];
-            
-            document.getElementById('category').textContent = '📁 ' + currentCategory;
-            document.getElementById('category').style.display = 'block';
-            document.getElementById('instructions').textContent = `${currentWords.length} ta so'zni diqqat bilan eslang!`;
-            document.getElementById('inputArea').classList.remove('show');
-            document.getElementById('wordList').innerHTML = '';
-            
-            showWords();
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+
+            cards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                
+                card.addEventListener('click', () => handleCardClick(card, symbol));
+                grid.appendChild(card);
+            });
+
+            // Start timer on first click
+            startTime = null;
         }
 
-        function showWords() {
-            const display = document.getElementById('wordsDisplay');
-            display.innerHTML = '';
-            
-            let index = 0;
-            const interval = setInterval(() => {
-                if (index < currentWords.length) {
-                    display.innerHTML = `<div class="word-item">${currentWords[index]}</div>`;
-                    playWordSound();
-                    index++;
-                } else {
-                    clearInterval(interval);
+        function handleCardClick(card, symbol) {
+            // Start timer on first click
+            if (!startTime) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 100);
+                playBackgroundMusic();
+            }
+
+            if (flippedCards.length < 2 && 
+                !card.classList.contains('flipped') && 
+                !card.classList.contains('matched')) {
+                
+                playFlipSound();
+                card.classList.add('flipped');
+                card.textContent = symbol;
+                flippedCards.push(card);
+
+                if (flippedCards.length === 2) {
+                    moves++;
+                    document.getElementById('moves').textContent = moves;
+
                     setTimeout(() => {
-                        display.innerHTML = '<div class="countdown">3</div>';
-                        setTimeout(() => {
-                            display.innerHTML = '<div class="countdown">2</div>';
-                            setTimeout(() => {
-                                display.innerHTML = '<div class="countdown">1</div>';
-                                setTimeout(() => {
-                                    startRecall();
-                                }, 1000);
-                            }, 1000);
-                        }, 1000);
-                    }, 500);
+                        if (flippedCards[0].dataset.symbol === flippedCards[1].dataset.symbol) {
+                            // Match found
+                            playMatchSound();
+                            flippedCards.forEach(c => c.classList.add('matched'));
+                            matchedPairs++;
+                            
+                            // Calculate score
+                            const timeBonus = Math.max(0, 100 - Math.floor((Date.now() - startTime) / 1000));
+                            const movesPenalty = moves * 2;
+                            score += Math.max(10, 50 - movesPenalty + timeBonus);
+                            
+                            document.getElementById('matches').textContent = matchedPairs;
+                            document.getElementById('score').textContent = score;
+
+                            if (matchedPairs === selectedSymbols.length) {
+                                stopBackgroundMusic();
+                                setTimeout(() => playWinSound(), 300);
+                                endGame();
+                            }
+                        } else {
+                            // No match
+                            playWrongSound();
+                            flippedCards.forEach(c => {
+                                c.classList.remove('flipped');
+                                c.textContent = '';
+                            });
+                        }
+                        flippedCards = [];
+                    }, 1000);
                 }
-            }, 2000);
-        }
-
-        function startRecall() {
-            document.getElementById('wordsDisplay').innerHTML = '<p style="color: #666; font-size: 1.2em;">Eslab qoling va yozing!</p>';
-            document.getElementById('instructions').textContent = 'So\'zlarni yozing (har qanday tartibda)';
-            document.getElementById('inputArea').classList.add('show');
-            document.getElementById('wordInput').focus();
-            document.getElementById('progressInfo').textContent = `0 / ${currentWords.length} so'z`;
-        }
-
-        function submitWord() {
-            const input = document.getElementById('wordInput');
-            const word = input.value.trim().toLowerCase();
-            
-            if (!word) return;
-            
-            if (rememberedWords.includes(word)) {
-                playWrongSound();
-                showFeedback('info', '⚠️ Bu so\'z allaqachon kiritilgan!');
-                input.value = '';
-                return;
             }
-            
-            if (currentWords.includes(word)) {
-                playCorrectSound();
-                rememberedWords.push(word);
-                addWordChip(word, true);
-                streak++;
-                score += 10 + (streak * 2);
-                
-                showFeedback('success', '✓ To\'g\'ri!');
-                
-                if (rememberedWords.length === currentWords.length) {
-                    setTimeout(() => completeLevel(), 1000);
-                }
-            } else {
-                playWrongSound();
-                streak = 0;
-                showFeedback('error', '✗ Bu so\'z ro\'yxatda yo\'q!');
-            }
-            
-            input.value = '';
-            updateStats();
-            document.getElementById('progressInfo').textContent = `${rememberedWords.length} / ${currentWords.length} so'z`;
         }
 
-        function skipWord() {
-            const input = document.getElementById('wordInput');
-            input.value = '';
-            streak = 0;
-            updateStats();
-        }
-
-        function finishRecall() {
-            if (rememberedWords.length === 0) {
-                showFeedback('error', 'Kamida bitta so\'z kiriting!');
-                return;
-            }
-            
-            completeLevel();
-        }
-
-        function completeLevel() {
-            const correctCount = rememberedWords.length;
-            const totalCount = currentWords.length;
-            const missedWords = currentWords.filter(w => !rememberedWords.includes(w));
-            
-            let feedbackText = '';
-            if (correctCount === totalCount) {
-                playLevelUpSound();
-                feedbackText = `🎉 Ajoyib! Barcha so'zlarni esladingiz!`;
-                level++;
-                score += 50;
-            } else {
-                feedbackText = `✅ ${correctCount} / ${totalCount} to'g'ri!`;
-                if (missedWords.length > 0) {
-                    feedbackText += `<br>Unutilgan: ${missedWords.join(', ')}`;
-                }
-                level++;
-            }
-            
-            if (streak > maxStreak) {
-                maxStreak = streak;
-            }
-            
-            showFeedback(correctCount === totalCount ? 'success' : 'info', feedbackText);
-            updateStats();
-            
-            document.getElementById('inputArea').classList.remove('show');
-            
-            setTimeout(() => {
-                if (level <= 10) {
-                    nextLevel();
-                } else {
-                    endGame();
-                }
-            }, 3000);
-        }
-
-        function addWordChip(word, isCorrect) {
-            const chip = document.createElement('div');
-            chip.className = 'word-chip';
-            chip.textContent = word;
-            if (isCorrect) {
-                chip.style.background = 'linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%)';
-            }
-            document.getElementById('wordList').appendChild(chip);
-        }
-
-        function showFeedback(type, message) {
-            const feedback = document.getElementById('feedback');
-            feedback.className = `feedback ${type} show`;
-            feedback.innerHTML = message;
-            
-            setTimeout(() => {
-                feedback.classList.remove('show');
-            }, 2000);
-        }
-
-        function updateStats() {
-            document.getElementById('level').textContent = level;
-            document.getElementById('score').textContent = score;
-            document.getElementById('streak').textContent = streak;
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timer').textContent = elapsed;
         }
 
         function endGame() {
-            document.getElementById('gameArea').style.display = 'none';
-            document.getElementById('gameOver').classList.add('show');
+            clearInterval(timerInterval);
+            stopBackgroundMusic();
+            const finalTime = Math.floor((Date.now() - startTime) / 1000);
             
-            document.getElementById('finalLevel').textContent = level - 1;
-            document.getElementById('finalScore').textContent = score;
-            document.getElementById('maxStreak').textContent = maxStreak;
-        }
-
-        function resetGame() {
-            document.getElementById('gameArea').style.display = 'block';
-            document.getElementById('gameOver').classList.remove('show');
-            document.getElementById('startControls').style.display = 'block';
-            document.getElementById('instructions').textContent = 'Boshlash uchun tugmani bosing';
-            document.getElementById('wordsDisplay').innerHTML = '';
-            document.getElementById('category').style.display = 'none';
-            document.getElementById('progressInfo').textContent = '';
-            document.getElementById('inputArea').classList.remove('show');
-        }
-
-        // Enter key support
-        document.getElementById('wordInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                submitWord();
+            // Update best time
+            if (!bestTime || finalTime < parseInt(bestTime)) {
+                bestTime = finalTime;
+                localStorage.setItem('memoryBestTime', bestTime);
+                document.getElementById('bestTime').textContent = bestTime + 's';
             }
-        });
+
+            // Calculate stars based on performance
+            let stars = '⭐';
+            if (moves <= selectedSymbols.length * 1.5) {
+                stars = '⭐⭐⭐';
+            } else if (moves <= selectedSymbols.length * 2) {
+                stars = '⭐⭐';
+            }
+
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('finalTime').textContent = finalTime;
+            document.getElementById('finalMoves').textContent = moves;
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('gameOver').classList.add('show');
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            if (isMusicPlaying) {
+                stopBackgroundMusic();
+                btn.textContent = '🔇 Musiqa';
+            } else {
+                playBackgroundMusic();
+                btn.textContent = '🔊 Musiqa';
+            }
+        }
+
+        // Initialize game on load
+        initGame();
     </script>
 </body>
 </html>
