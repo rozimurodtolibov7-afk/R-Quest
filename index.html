@@ -350,8 +350,9 @@ var TR = {
     timeUp:"VAQT TUGADI!",score:"BALL",streak:"SERIYA",best:"REKORD",
     again:"QAYTA O'YNASH",settings:"SOZLAMALAR",
     easy:"OSON",med:"O'RTACHA",hard:"QIYIN",
-    correct:"TO'G'RI! +",wrong:"NOTO'G'RI! -2s",
-    bestStreak:"ENG UZUN SERIYA",tricked:"CHALG'ITILDI!",plusSec:"+1 son"
+    correct:"TO'G'RI! +",wrong:"XATO! O'YIN TUGADI!",
+    bestStreak:"ENG UZUN SERIYA",tricked:"CHALG'ITILDI!",plusSec:"+1 son",
+    youLose:"YUTQAZDINGIZ!<br><span>XATO JAVOB</span>"
   },
   ru:{
     tapLbl:"НАЖМИ НА ЦВЕТ ТЕКСТА (НЕ СЛОВА!)",
@@ -364,8 +365,9 @@ var TR = {
     timeUp:"ВРЕМЯ ВЫШЛО!",score:"ОЧКИ",streak:"СЕРИЯ",best:"РЕКОРД",
     again:"ЕЩЁ РАЗ",settings:"НАСТРОЙКИ",
     easy:"ЛЕГКО",med:"СРЕДНЕ",hard:"СЛОЖНО",
-    correct:"ВЕРНО! +",wrong:"НЕВЕРНО! -2с",
-    bestStreak:"ЛУЧШАЯ СЕРИЯ",tricked:"ПОПАЛСЯ!",plusSec:"+1 сек"
+    correct:"ВЕРНО! +",wrong:"ОШИБКА! ИГРА ОКОНЧЕНА!",
+    bestStreak:"ЛУЧШАЯ СЕРИЯ",tricked:"ПОПАЛСЯ!",plusSec:"+1 сек",
+    youLose:"ПРОИГРАЛИ!<br><span>НЕВЕРНЫЙ ОТВЕТ</span>"
   },
   en:{
     tapLbl:"TAP THE INK COLOR — NOT THE WORD!",
@@ -378,8 +380,9 @@ var TR = {
     timeUp:"TIME'S UP!",score:"SCORE",streak:"STREAK",best:"BEST",
     again:"PLAY AGAIN",settings:"SETTINGS",
     easy:"EASY",med:"MEDIUM",hard:"HARD",
-    correct:"CORRECT! +",wrong:"WRONG! −2s",
-    bestStreak:"BEST STREAK",tricked:"TRICKED!",plusSec:"+1s"
+    correct:"CORRECT! +",wrong:"WRONG! GAME OVER!",
+    bestStreak:"BEST STREAK",tricked:"TRICKED!",plusSec:"+1s",
+    youLose:"YOU LOSE!<br><span>WRONG ANSWER</span>"
   }
 };
 
@@ -527,7 +530,7 @@ function stopBgm(){if(bgmI){clearInterval(bgmI);bgmI=null;}}
 // ══════════════════════════════════════
 var score=0, streak=0, bestStreak=0, bestScore=0;
 var timeLeft=0, timeMax=0, timerI=null, gameActive=false;
-var trickedCount=0, correctCount=0;
+var trickedCount=0, correctCount=0, wrongAnswer=false;
 
 // Difficulty config
 function getDiffCfg(){
@@ -546,7 +549,7 @@ function startGame(){
   el('goOv').classList.add('hidden');
   initAudio();if(actx.state==='suspended')actx.resume();
   var cfg=getDiffCfg();
-  score=0;streak=0;trickedCount=0;correctCount=0;
+  score=0;streak=0;trickedCount=0;correctCount=0;wrongAnswer=false;
   timeMax=cfg.time; timeLeft=cfg.time;
   el('hudScore').textContent='0';
   el('hudStreak').textContent='0';
@@ -673,12 +676,13 @@ function onTap(ci, btn){
     showFeedback(t('correct')+pts,'#3dffa0');
     flash('#3dffa022');
   } else {
-    streak=0;
-    el('hudStreak').textContent='0';
-    timeLeft=Math.max(0,timeLeft-cfg.penalty);
     sfxWrong();
+    flash('#ff3d5a44');
     showFeedback(t('wrong'),'#ff3d5a');
-    flash('#ff3d5a22');
+    wrongAnswer=true;
+    gameActive=false;
+    setTimeout(endGame,700);
+    return;
   }
 
   setTimeout(newRound,320);
@@ -717,7 +721,12 @@ function endGame(){
   gameActive=false;stopTimer();stopBgm();sfxEnd();
   el('goOv').classList.remove('hidden');
   var t_=t;
-  el('goTitle').innerHTML=t_('timeUp').replace("'S UP","'S<br><span>UP!</span>").replace("TUGADI","<br><span>TUGADI!</span>").replace("VYSHLO","<br><span>VYSHLO!</span>");
+  // Different title: wrong answer vs time up
+  if(wrongAnswer){
+    el('goTitle').innerHTML=t_('youLose');
+  } else {
+    el('goTitle').innerHTML=t_('timeUp').replace("'S UP","'S<br><span>UP!</span>").replace("TUGADI","<br><span>TUGADI!</span>").replace("ВЫШЛО","<br><span>ВЫШЛО!</span>");
+  }
   var gs=el('goStats');gs.innerHTML='';
   [{l:t_('score'),v:score},{l:t_('streak'),v:bestStreak},{l:t_('best'),v:bestScore}].forEach(function(it){
     gs.innerHTML+='<div class="rc"><div class="rc-n">'+it.v+'</div><div class="rc-l">'+it.l+'</div></div>';
